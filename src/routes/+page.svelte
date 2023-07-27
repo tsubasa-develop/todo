@@ -36,6 +36,12 @@
 		localStorage.setItem('todos', JSON.stringify(todos));
 	};
 
+	const handleKeydown = (e: KeyboardEvent) => {
+		if (e.key === 'Enter') {
+			addTask();
+		}
+	};
+
 	onMount(() => {
 		todos = getTodos();
 	});
@@ -48,7 +54,7 @@
 
 <section>
 	<h1>todo list</h1>
-	<input type="text" bind:value={task} />
+	<input type="text" bind:value={task} on:keydown={handleKeydown} />
 	<button on:click={addTask}>追加</button>
 	<ul>
 		{#each todos as todo (todo.id)}
