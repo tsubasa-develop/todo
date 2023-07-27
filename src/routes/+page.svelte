@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import { v1 as uuid } from 'uuid';
 
 	type Todo = {
-		id: number;
+		id: string;
 		task: string;
 	};
 
@@ -12,11 +13,11 @@
 
 	const addTask = () => {
 		if (task === '') return;
-		todos = [...todos, { id: todos.length + 1, task: task }];
+		todos = [...todos, { id: uuid(), task: task }];
 		saveTodos();
 	};
 
-	const deleteTask = (id: number) => {
+	const deleteTask = (id: string) => {
 		todos = todos.filter((todo) => todo.id !== id);
 		saveTodos();
 	};
