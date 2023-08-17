@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Textfield from '@smui/textfield';
 	import HelperText from '@smui/textfield/helper-text';
 	import Button, { Label } from '@smui/button';
@@ -63,35 +64,38 @@
 
 <section>
 	<h1>TODO LIST</h1>
-	<div class="field">
-		<Textfield bind:value={title} label="タイトル">
-			<HelperText slot="helper">TODOのタイトルを入力してください。</HelperText>
-		</Textfield>
-		<Textfield textarea bind:value={text} label="詳細">
-			<HelperText slot="helper">TODOの詳細を入力してください</HelperText>
-		</Textfield>
-	</div>
-	<Button on:click={addTask} variant="raised">
-		<Label>追加</Label>
-	</Button>
-
-	<List class="demo-list" checkList on:SMUIList:selectionChange={() => {}}>
-		{#each todos as todo (todo.id)}
-			<Item>
-				<ListLabel>{todo.title}</ListLabel>
-				<Meta>
-					<Checkbox bind:group={selected} value={todo.id} />
-				</Meta>
-			</Item>
-		{/each}
-	</List>
-	<Button on:click={deleteTask} variant="raised">
-		<Label>削除</Label>
-	</Button>
+	<LayoutGrid>
+		<Cell span={12}>
+			<div>
+				<Textfield bind:value={title} label="タイトル" style="width: 100%">
+					<HelperText slot="helper">TODOのタイトルを入力してください。</HelperText>
+				</Textfield>
+				<Textfield textarea bind:value={text} label="詳細" style="width: 100%;margin-top: 12px;">
+					<HelperText slot="helper">TODOの詳細を入力してください</HelperText>
+				</Textfield>
+			</div>
+		</Cell>
+		<Cell span={1}>
+			<Button on:click={addTask} variant="raised">
+				<Label>追加</Label>
+			</Button>
+		</Cell>
+		<Cell span={1}>
+			<Button on:click={deleteTask} variant="raised">
+				<Label>削除</Label>
+			</Button>
+		</Cell>
+		<Cell span={12}>
+			<List class="demo-list" checkList on:SMUIList:selectionChange={() => {}}>
+				{#each todos as todo (todo.id)}
+					<Item>
+						<ListLabel>{todo.title}</ListLabel>
+						<Meta>
+							<Checkbox bind:group={selected} value={todo.id} />
+						</Meta>
+					</Item>
+				{/each}
+			</List>
+		</Cell>
+	</LayoutGrid>
 </section>
-
-<style>
-	.field {
-		display: grid;
-	}
-</style>
